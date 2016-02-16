@@ -1,1 +1,96 @@
-hello!
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<canvas id="canvas" style="background:#ccc;display:block;margin:50px auto;" width="800" height="800">
+		
+	</canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+
+		
+		var balls = [];
+
+		window.onload = function()
+		{
+			//小球个数
+			setBall(80);
+			setInterval(mainFunction, 50);
+		}
+
+		function setBall(num)
+		{
+			context.globalCompositeOperation = "xor";
+			for(var i=0; i < num; i++)
+			{
+				var R = Math.floor(Math.random()*255);
+				var G = Math.floor(Math.random()*255);
+				var B = Math.floor(Math.random()*255);
+				balls[i] = 
+				{
+					beginX: Math.random()*context.canvas.width,
+					beginY: Math.random()*context.canvas.height,
+					//小球x轴随机速度
+					vx: Math.max(Math.random()*15, 5),
+					//小球y轴随机速度
+					vy: Math.max(Math.random()*20, 5),
+					//小球随机半径
+					r: Math.max(Math.random()*50, 40),
+					bColor: "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")"
+				}
+				// console.log(balls[i].beginX + "," + balls[i].beginY + "," + balls[i].vx + "," + balls[i].vy + balls[i].r)
+			}
+		}
+
+		function mainFunction()
+		{
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+			for(var i=0; i < balls.length; i++)
+			{
+				if(balls[i].beginY >= context.canvas.height-balls[i].r)
+				{
+					balls[i].beginY = context.canvas.height-balls[i].r;
+					balls[i].vy = -balls[i].vy;
+				}
+				if(balls[i].beginY <= balls[i].r)
+				{
+					balls[i].beginY = balls[i].r;
+					balls[i].vy = -balls[i].vy;
+				}
+				if(balls[i].beginX >= context.canvas.width-balls[i].r)
+				{
+					balls[i].beginX = context.canvas.width-balls[i].r;
+					balls[i].vx = -balls[i].vx;
+				}
+				if(balls[i].beginX <= balls[i].r)
+				{
+					balls[i].beginX = balls[i].r;
+					balls[i].vx = -balls[i].vx;
+				}
+				balls[i].beginX += balls[i].vx;
+				balls[i].beginY += balls[i].vy;
+
+				drawOneBall(balls[i].beginX, balls[i].beginY, balls[i].r, balls[i].bColor);
+			}
+		}
+
+		function drawOneBall(x, y, r, color)
+		{
+			context.beginPath();
+			context.arc(x, y, r, 0, 2*Math.PI);
+			context.fillStyle = color;
+			context.fill();
+			context.stroke();
+			context.closePath();
+		}
+
+	</script>
+</body>
+</html>
