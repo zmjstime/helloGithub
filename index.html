@@ -20,7 +20,7 @@
 		window.onload = function()
 		{
 			//小球个数
-			setBall(80);
+			setBall(20);
 			setInterval(mainFunction, 50);
 		}
 
@@ -41,7 +41,7 @@
 					//小球y轴随机速度
 					vy: Math.max(Math.random()*20, 5),
 					//小球随机半径
-					r: Math.max(Math.random()*50, 40),
+					r: Math.max(Math.random()*20, 10),
 					bColor: "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")"
 				}
 				// console.log(balls[i].beginX + "," + balls[i].beginY + "," + balls[i].vx + "," + balls[i].vy + balls[i].r)
